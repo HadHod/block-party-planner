@@ -13,5 +13,5 @@ export interface BlockParty {
   mail: string;
   www: string;
   remarks: string;      // bemerkungen
-  coordinate: Coordinates;
+  coordinates: Coordinates;
 }

@@ -15,7 +15,7 @@ export function parseBlockParty(data: any): BlockParty {
     mail: data.mail,
     www: data.www,
     remarks: data.bemerkungen,
-    coordinate: {
+    coordinates: {
       latitude: Number(data._wgs84_lat),
       longitude: Number(data._wgs84_lon),
     } as Coordinates,

@@ -1,7 +1,15 @@
+/**
+ * TODO
+ * - input validation
+ * - unit tests
+ * - calculate distance between parties
+ */
+
 import request from 'request';
 import prompt from 'prompt-sync';
-import { BlockParty } from './models/BlockParty';
-import { parseBlockParty } from './utils';
+
+import { BlockParty } from './models';
+import { filterByDate, parseBlockParty, sortByDistance } from './utils';
 
 const promptBox = prompt({ sigint: true });
 const BLOCK_PARTIES_URL = 'https://www.berlin.de/sen/web/service/maerkte-feste/strassen-volksfeste/brandenburg/index.php/index/all.gjson?q=';
@@ -30,5 +38,13 @@ request(BLOCK_PARTIES_URL, { json: true }, (err: any, _res: any, body: any) => {
 
   console.log(parties);
 
-  // const filteredByDate: BlockParty[] =
+  // This one is checking if start and end time overlapping block party time. It should also remember and sort by time
+  // At this point we might be late to the party
+  const filteredByDate: BlockParty[] = parties.filter((party: BlockParty) => filterByDate(party, start, end));
+
+  const sortedParties: BlockParty[] = filteredByDate.sort((a: BlockParty, b: BlockParty) => sortByDistance(a, b, point));
+
+  const takeFirst: BlockParty[] = sortedParties.slice(0, numberOfBlockParties);
+
+  console.log(takeFirst);
 });
