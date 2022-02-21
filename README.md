@@ -12,6 +12,10 @@ npm run build
 npm run start:prod
 ```
 
+### Requirements
+
+* NodeJS (v16.x)
+
 ### TODO
 
 * coordinates helper

@@ -1,3 +1,4 @@
+import { splitAndParseNumber } from '.';
 import { BlockParty } from '../models';
 
 function compareDates(a: number[], b: number[]): number {
@@ -16,8 +17,8 @@ function compareDates(a: number[], b: number[]): number {
 }
 
 export function filterByDate({ from, to }: BlockParty, start: number[], end: number[]): boolean {
-  const fromSplitted: number[] = from.split('-').map((n: string) => Number(n));
-  const toSplitted: number[] = to.split('-').map((n: string) => Number(n));
+  const fromSplitted: number[] = splitAndParseNumber(from);
+  const toSplitted: number[] = splitAndParseNumber(to);
 
   // Starts too late
   if (compareDates(fromSplitted, end) === 1) {

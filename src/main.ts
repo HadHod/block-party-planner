@@ -10,16 +10,16 @@ import request from 'request';
 import prompt, { Prompt } from 'prompt-sync';
 
 import { BlockParty } from './models';
-import { formatBlockPartyInfo, filterByDate, parseBlockParty, sortByDistance } from './utils';
+import { formatBlockPartyInfo, filterByDate, parseBlockParty, sortByDistance, splitAndParseNumber } from './utils';
 
 const promptBox: Prompt = prompt({ sigint: true });
 const BLOCK_PARTIES_URL: string = 'https://www.berlin.de/sen/web/service/maerkte-feste/strassen-volksfeste/brandenburg/index.php/index/all.gjson?q=';
 
 const name: string = promptBox('What is your name? ');
 const numberOfBlockParties: number = Number(promptBox('How many (maximum) block parties do you want to visit? '));
-const start: number[] = promptBox('Start date (YYYY-MM-DD) of your holidays ').split('-').map(n => Number(n));
-const end: number[] = promptBox('End date (YYYY-MM-DD) ').split('-').map(n => Number(n));
-const point: number[] = promptBox('Where are you? (latitude-longitude) ').split('-').map(n => Number(n));
+const start: number[] = splitAndParseNumber(promptBox('Start date (YYYY-MM-DD) of your holidays '));
+const end: number[] = splitAndParseNumber(promptBox('End date (YYYY-MM-DD) '));
+const point: number[] = splitAndParseNumber(promptBox('Where are you? (latitude-longitude) '));
 
 request(BLOCK_PARTIES_URL, { json: true }, (err: any, _res: any, body: any) => {
   if (err) {
