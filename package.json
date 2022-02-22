@@ -5,8 +5,9 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start:devdev": "nodemon -e ts --watch src --exec 'ts-node src/main.ts'",
+    "start:dev": "nodemon -e ts --watch src --exec 'ts-node src/main.ts'",
     "start:prod": "node dist/main.js",
+    "start:prod-with-test-data": "npm run build && cat test-data/data-set-1.txt | npm run start:prod `xargs`",
     "lint": "tslint -p tsconfig.json --format stylish"
   },
   "type": "commonjs",

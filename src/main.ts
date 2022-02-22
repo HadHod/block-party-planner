@@ -15,11 +15,27 @@ import { formatBlockPartyInfo, filterByDate, parseBlockParty, sortByDistance, sp
 const promptBox: Prompt = prompt({ sigint: true });
 const BLOCK_PARTIES_URL: string = 'https://www.berlin.de/sen/web/service/maerkte-feste/strassen-volksfeste/brandenburg/index.php/index/all.gjson?q=';
 
-const name: string = promptBox('What is your name? ');
-const numberOfBlockParties: number = Number(promptBox('How many (maximum) block parties do you want to visit? '));
-const start: number[] = splitAndParseNumber(promptBox('Start date (YYYY-MM-DD) of your holidays '));
-const end: number[] = splitAndParseNumber(promptBox('End date (YYYY-MM-DD) '));
-const point: number[] = splitAndParseNumber(promptBox('Where are you? (latitude-longitude) '));
+let name: string = process.argv[2];
+let numberOfBlockParties: number = process.argv[3] ? Number(process.argv[3]) : undefined;
+let start: number[] = process.argv[4] ? splitAndParseNumber(process.argv[4]) : undefined;
+let end: number[] = process.argv[5] ? splitAndParseNumber(process.argv[5]) : undefined;
+let point: number[] = process.argv[6] ? splitAndParseNumber(process.argv[6]) : undefined;
+
+if (!name) {
+  name = promptBox('What is your name? ');
+}
+if (!numberOfBlockParties) {
+  numberOfBlockParties = Number(promptBox('How many (maximum) block parties do you want to visit? '));
+}
+if (!start) {
+  start = splitAndParseNumber(promptBox('Start date (YYYY-MM-DD) of your holidays '));
+}
+if (!end) {
+  end = splitAndParseNumber(promptBox('End date (YYYY-MM-DD) '));
+}
+if (!point) {
+  point = splitAndParseNumber(promptBox('Where are you? (latitude-longitude) '));
+}
 
 request(BLOCK_PARTIES_URL, { json: true }, (err: any, _res: any, body: any) => {
   if (err) {
