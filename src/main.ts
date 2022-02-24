@@ -44,6 +44,8 @@ request(BLOCK_PARTIES_URL, { json: true }, (err: any, _res: any, body: any) => {
 
   const parties: BlockParty[] = body.features.map(({ properties: { data } }: any) => parseBlockParty(data));
 
+  console.log('All block parties:', parties.length);
+
   // This one is checking if start and end time overlapping block party time. It should also remember and sort by time
   // At this point we might be late to the party
   const filteredByDate: BlockParty[] = parties.filter((party: BlockParty) => filterByDate(party, start, end));
